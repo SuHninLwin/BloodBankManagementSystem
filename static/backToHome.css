@@ -1,0 +1,111 @@
+.navbar-brand{
+    font-family: Times, "Times New Roman", Georgia, serif;
+    font-size: 30px;
+    color: white;
+    text-shadow: 2px 2px 5px white;
+}
+
+.navbar-brand:hover{
+    color: wheat;
+    text-shadow: 2px 2px 5px wheat;
+}
+
+.nav-link{
+    color: white;
+    font-size: 16px;
+}
+
+.nav-link:hover{
+    color: wheat;
+}
+
+.navbar-btn{
+    border: 2px solid white;
+}
+
+.navbar-btnicon{
+    font-size: small;
+}
+
+.login-name-box{
+    border: none;
+    background: none;
+    outline: none;
+    float: left;
+    padding: 0;
+    color: white;
+    font-size: 13px;
+    line-height: 30px;
+    width: 120px;
+    border: transparent;
+    padding-left: 8px;
+}
+
+::placeholder{
+    color: white;
+    opacity: 1;
+}
+
+.acc-login-btn{
+    color: white;
+    float: right;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.acc-login-btn:hover{
+    color: wheat;
+}
+
+.link:hover{
+    color: rgb(156, 58, 58);
+    cursor: pointer;
+}
+
+.bth-button{
+    background-color: rgb(156, 58, 58);
+    border: 2px solid white; 
+    color: white;
+    font-size: 20px;
+    border-radius: 10px; 
+    width: 160px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bth-button:hover{
+    border: 2px solid rgb(156, 58, 58);
+    background-color: transparent;
+    color: rgb(156, 58, 58);
+    height: 50px;
+}
+
+a {   
+    color: white;   
+}
+
+a:active {
+    color: white;
+}
+
+a:focus {
+    color:white;
+    outline: none;
+}
+
+a:hover {
+    color: rgb(156, 58, 58);
+}
+
+p{
+    color: rgb(156, 58, 58);
+    font-style: bold;
+    font-size: 25px;
+    text-align: center;
+}

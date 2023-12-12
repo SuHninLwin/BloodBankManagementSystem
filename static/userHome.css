@@ -1,0 +1,256 @@
+.navbar-brand{
+    font-family: Times, "Times New Roman", Georgia, serif;
+    font-size: 30px;
+    color: white;
+    text-shadow: 2px 2px 5px white;
+}
+
+.navbar-brand:hover{
+    color: wheat;
+    text-shadow: 2px 2px 5px wheat;
+}
+
+.nav-link{
+    color: white;
+    font-size: 16px;
+}
+
+.nav-link:hover{
+    color: wheat;
+}
+
+.navbar-btn{
+    border: 2px solid white;
+}
+
+.navbar-btnicon{
+    font-size: small;
+}
+
+.login-name-box{
+    border: none;
+    background: none;
+    outline: none;
+    float: left;
+    padding: 0;
+    color: white;
+    font-size: 13px;
+    line-height: 30px;
+    width: 120px;
+    border: transparent;
+    padding-left: 8px;
+}
+
+.acc-login-btn{
+    color: white;
+    float: right;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.acc-login-btn:hover{
+    color: wheat;
+}
+
+.link:hover{
+    color: rgb(156, 58, 58);
+    cursor: pointer;
+}
+
+.user-interface-title{
+    background-color: transparent;
+    color: rgb(156, 58, 58);
+    font-size: 30px;
+    font-style: oblique;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 10px;
+    margin-top: 30px;
+}
+
+.user-interface-quote{
+    background-color: transparent;
+    color: rgb(156, 58, 58);
+    font-style: bolder;
+    font-size: 20px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 40px;
+}
+
+.blood-logo-div1{
+    background-color: transparent;
+    color: aliceblue;
+    margin-bottom: 40px;
+}
+
+.my-profile-div2{
+    background-color: transparent;
+    color: red;
+    margin-bottom: 40px;
+}
+
+.donate-blood-div3{
+    background-color: transparent;
+    color: aliceblue;
+    margin-bottom: 40px;
+}
+
+.request-blood-div4{
+    background-color: transparent;
+    color: red;
+    margin-bottom: 40px;
+}
+
+.my-profile-div2, .donate-blood-div3, .request-blood-div4:hover{
+    cursor: pointer;
+}
+
+.btn-profile{
+    background-color: rgb(156, 58, 58);
+    border: 2px solid white; 
+    color: white;
+    font-size: 18px;
+    border-radius: 10px; 
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-profile:hover{
+    border: 2px solid rgb(156, 58, 58);
+    background-color: transparent;
+    color: rgb(156, 58, 58);
+}
+
+.btn-donate{
+    background-color: rgb(156, 58, 58);
+    border: 2px solid white; 
+    color: white;
+    font-size: 18px;
+    border-radius: 10px; 
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-donate:hover{
+    border: 2px solid rgb(156, 58, 58);
+    background-color: transparent;
+    color: rgb(156, 58, 58);
+}
+
+.btn-request{
+    background-color: rgb(156, 58, 58);
+    border: 2px solid white; 
+    color: white;
+    font-size: 18px;
+    border-radius: 10px; 
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-request:hover{
+    border: 2px solid rgb(156, 58, 58);
+    background-color: transparent;
+    color: rgb(156, 58, 58);
+}
+
+.myprofile-title, .donate-title{
+    color: white;
+}
+
+.btn-close-div{
+    background-color: rgb(156, 58, 58);
+    border: 2px solid white; 
+    color: white; 
+    font-size: 13px;
+    border-radius: 10px; 
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-close-div:hover{
+    border: 2px solid white;
+    background-color: white;
+    color: rgb(156, 58, 58);
+}
+
+.inputbox{
+    background: white; 
+    padding: 0; 
+    color: black; 
+    font-size: 15px; 
+    line-height: 30px; 
+    width: 200px; 
+    border: 2px solid black; 
+    border-radius: 30px; 
+    padding-left: 10px;
+}
+
+.submit-button, .cancel-button, .donorlist-button{
+    background-color: black; 
+    color: white; 
+    font-size: 15px; 
+    border-radius: 10px; 
+    border: none; 
+    width: 80px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 30px;
+}
+
+.submit-button:hover, .cancel-button:hover, .donorlist-button:hover{
+    background-color: transparent;
+    border: 2px solid black; 
+    color: black;
+    font-size: 15px;
+    border-radius: 10px; 
+    width: 80px;
+}
+
+.acc-profile-logo{
+    color: white;
+    float: right;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-acc-name{
+    color: rgb(156, 58, 58);
+    font-size: 20px;
+    text-align: center;
+}
+
+a {   
+    color: white; 
+    text-decoration: none;
+}
+
+a:active {
+    color: white;
+    text-decoration: none;
+}
+
+a:focus {
+    color:white;
+    outline: none;
+    text-decoration: none; 
+}
+
+.my-profile-link:hover{
+    color: rgb(156, 58, 58);
+    cursor: pointer;
+    text-decoration: none;
+}
