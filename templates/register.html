@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    
+    <title>OBBMS - Login Page</title>
+    <link rel="stylesheet" href="../static/register.css">
+</head>
+<body>
+    <!-- Start of alert message on user login -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <script>
+            var messages = {{ messages | safe }};
+            for (var i=0; i<messages.length; i++) 
+            {
+                alert(messages[i]);
+            }
+        </script>
+    {% endif %}
+    {% endwith %}
+    <!-- End of alert message on user login -->
+
+
+    <!-- Start of system nevigation -->
+    <nav class="navbar navbar-expand-sm" style="background-color: rgb(156, 58, 58);">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">OBBMS</a>
+            <button class="navbar-toggler navbar-btn" type="button" data-bs-toggle="collapse" data-bs-target="#navbardiv">
+                <span class="navbar-toggler-icon navbar-btnicon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbardiv">
+                <ul class="navbar-nav me-auto" style="margin-bottom: 10px;">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/aboutus">About-Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">User-Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/donatecamp">Donate-Camp</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home">Go-Back</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input  class="login-name-box" type="text" name="" placeholder="Please login...">
+                    <a class="acc-login-btn" href="#" >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                        </svg>
+                    </a>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <!-- End of system nevigation -->
+
+
+    <!-- Start of system body -->
+    <div style="width: 100%; background-color: rgb(201, 201, 201);">
+        <div class="d-flex justify-content-center">
+            <div class="table-responsive">
+                <form action="/register" method="POST">
+                    <table class="table" style="border: 1px solid black; border-top: none; border-left: none; border-right: none;">
+                        <tr>
+                            <td colspan="2" style="font-family: Impact; font-size: 45px; font-weight: bold; text-align: center;">User Registeration</td>
+                        </tr>
+                        <tr style="height: 30px;"></tr>
+                        <tr style="border: transparent; height: 60px;">
+                            <td><label id="textusername" for="inputusername" style="font-size: 20px;">Enter Username</label></td>
+                            <td><input id="inputusername" class="form-control input-sm username-input" type="email" name="username" placeholder="Enter email here..." required></td>
+                            <span class="validity"></span>
+                        </tr>
+                        <tr style="height: 30px;"></tr>
+                        <tr style="border: transparent; height: 80px;">
+                            <td><label id="textpassword" for="inputpassword" style="font-size: 20px;">Enter Password</label></td>
+                            <td><input id="inputpassword" class="form-control input-sm password-input" type="password" name="password" placeholder="Enter password here..." pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required></td>
+                            <span class="validity"></span>
+                        </tr>
+                        <tr style="height: 30px;"></tr>
+                        <tr style="border: transparent; height: 80px;">
+                            <td><label id="textpassword" for="inputpassword" style="font-size: 20px;">Reenter Password</label></td>
+                            <td><input id="inputpassword" class="form-control input-sm password-input" type="password" name="repassword" placeholder="Reenter password here..." pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required></td>
+                            <span class="validity"></span>
+                        </tr>
+
+                        <tr style="border: transparent; height: 80px;">
+                            <td><label id="textrole" for="inputrole" style="font-size: 20px;">Role</label></td>
+                            <td><input id="inputrole" class="form-control input-sm role-input" type="text" name="role" value="user" disabled="disabled"></td>
+                            <span class="validity"></span>
+                        </tr>
+
+                        <tr style="height: 30px;"></tr>
+                        <tr style="text-align: center; height: 80px;">
+                            <td><button type="submit" id="signup-btn" class="btn full-right signup-button">SignUp</button></td>
+                            <td><button type="reset" class="btn full-right cancel-button">Cancel</button></td>
+                        </tr>
+                        <tr style="height: 2.5px;"></tr>
+                        <tr style="text-align: center;">
+                            <td><a href="/login"><u class="link">Login Now?</u></a></td>
+                            <td><a href="/aboutus" class="a-link"><u class="link">Contact Us?</u></a></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- End of system body -->
+
+
+    <!-- Start of system footer -->
+    <footer class=" text-center text-white" style="background-color: rgb(156, 58, 58);" >
+        <div class="container p-4">
+            <section class="mb-4">
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-facebook-f"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-twitter"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-google"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-instagram"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-linkedin-in"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-github"></i></a>
+            </section>
+            <section class="">
+                <form action="">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-auto">
+                            <p class="pt-2" style="color: white;">
+                                <strong>Sign up for our newsletter</strong>
+                            </p>
+                        </div>
+                        <div class="col-md-5 col-12">
+                            <div class="form-outline form-white mb-4">
+                                <input type="email" id="form5Example21" class="form-control" />
+                                <label class="form-label" for="form5Example21">Email address</label>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-outline-light mb-4">Subscribe</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </footer>
+    <!-- End of system footer -->
+
+
+</body>
+</html>

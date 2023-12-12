@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    
+    <title>OBBMS - Login Page</title>
+    <link rel="stylesheet" href="../static/userHome.css">
+
+    <link rel="shortcut icon" href="#">
+</head>
+<body>
+    <!-- Start of alert message on user login -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <script>
+            var messages = {{ messages | safe }};
+            for (var i=0; i<messages.length; i++) 
+            {
+                alert(messages[i]);
+            }
+        </script>
+    {% endif %}
+    {% endwith %}
+    <!-- End of alert message on user login -->
+
+
+    <!-- Start of system nevigation -->
+    <nav class="navbar navbar-expand-sm" style="background-color: rgb(156, 58, 58);">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">OBBMS</a>
+            <button class="navbar-toggler navbar-btn" type="button" data-bs-toggle="collapse" data-bs-target="#navbardiv">
+                <span class="navbar-toggler-icon navbar-btnicon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbardiv">
+                <ul class="navbar-nav me-auto" style="margin-bottom: 10px;">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#mynoti">My-Noti</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#myprofilediv">My-Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#donatediv">Donate-Blood</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#requestdiv">Blood-Request</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home">Logout-Now</a>
+                    </li>
+                </ul>
+                <form class="d-flex" action="/profilecheck" method="POST">
+                    <input  class="login-name-box" type="text" value="{{session.get("accId")}}" name="profileusername" placeholder="Please login..." disabled="disabled">
+                    <a class="acc-login-btn" href="#" >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                        </svg>
+                    </a>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <!-- End of system nevigation -->
+
+
+    <!-- Start of system body -->
+    <div style="width: 100%; background-color: rgb(201, 201, 201);">
+        <div class="d-flex justify-content-center">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="d-flex justify-content-center user-interface-title">
+                        Online Blood Bank Management System
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="d-flex justify-content-center user-interface-quote">
+                        "The blood you donate gives someone another chance at life.
+                        One day that someone may be a close relative, a friend, a loved one - or even you."
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="d-flex justify-content-center">
+
+                <!-- Start of notification div for user -->
+
+                <div class="col-sm-2 blood-logo-div1">
+                    <div class="overlay" style="margin-bottom: 10px;">
+                        <img src="https://thumbs.dreamstime.com/b/red-notification-icon-speech-bubble-red-notification-icon-speech-bubble-concept-ui-mailbox-check-list-writing-104050698.jpg" class="img-fluid" alt="Responsive image"></img>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-primary btn-profile" data-bs-toggle="modal" data-bs-target="#mynoti">
+                            <a class="my-profile-link">See Notification</a>
+                        </button>
+                    </div>
+
+                    {% if profiledata is none %}
+
+                        <div class="modal fade" id="mynoti" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mynotiLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                        <h5 class="modal-title donate-title" id="mynotiLabel">Notifications Here</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="d-flex justify-content-center">
+                                            <p style="color: rgb(156, 58, 58);">Recently you don't have any notifications!<p>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                        <button type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% else %}
+
+                        <div class="modal fade" id="mynoti" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mynotiLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                        <h5 class="modal-title donate-title" id="mynotiLabel">Notifications Here</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div>
+                                            <div class="buttons-div d-flex justify-content-center">
+                                                <button class="btn btn-primary donorlist-button" type="button" onclick="showDonorNoti()">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+                                                        <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+                                                    </svg> ({{donorcount.countrows}}) Donors 
+                                                </button>
+                                                <button class="btn btn-primary donorlist-button" type="button" onclick="showRecptNoti()">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+                                                        <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+                                                    </svg> ({{recptcount.countrows}}) Recpts
+                                                </button>
+                                            </div>
+                                            <div class="table-responsive overflow-scroll collapse" id="donorlistnoti" style="margin-top: 30px;">
+                                                <table class="table" style="border: 1px solid black; border-top: none; border-left: none; border-right: none;">
+                                                    <p style="font-family: Impact; font-size: 45px; font-weight: bold; text-align: center; color: black;">DONORS LIST<p>
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Donor</th>
+                                                            <th scope="col">Recipient</th>
+                                                            <th scope="col">Date</th>
+                                                            <th scope="col">Status</th>
+                                                            <th scope="col">BloodType</th>
+                                                            <th scope="col">Phone</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for donorlist in donorlist %}
+                                                            <tr>
+                                                                <td>{{donorlist.donarName}}</td>
+                                                                <td>{{donorlist.recptName}}</td>
+                                                                <td>{{donorlist.histDate}}</td>
+                                                                <td>{{donorlist.histStatus}}</td> 
+                                                                <td>{{donorlist.userBloodtype}}</td>
+                                                                <td>{{donorlist.userPhone}}</td> 
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="table-responsive overflow-scroll collapse" id="recptlistnoti" style="margin-top: 80px;">
+                                                <table class="table" style="border: 1px solid black; border-top: none; border-left: none; border-right: none;">
+                                                    <p style="font-family: Impact; font-size: 45px; font-weight: bold; text-align: center; color: black;">RECIPIENTS LIST<p>
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Donor</th>
+                                                            <th scope="col">Recipient</th>
+                                                            <th scope="col">Date</th>
+                                                            <th scope="col">Status</th>
+                                                            <th scope="col">BloodType</th>
+                                                            <th scope="col">Phone</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for recptlist in recptlist %}
+                                                            <tr>
+                                                                <td>{{recptlist.donarName}}</td>
+                                                                <td>{{recptlist.recptName}}</td>
+                                                                <td>{{recptlist.histDate}}</td>
+                                                                <td>{{recptlist.histStatus}}</td> 
+                                                                <td>{{recptlist.userBloodtype}}</td>
+                                                                <td>{{recptlist.userPhone}}</td> 
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <script>
+                                                function showDonorNoti(){
+                                                    var x = document.getElementById("donorlistnoti");
+                                                    if (x.style.display === "none"){
+                                                        x.style.display = "block";
+                                                    } 
+                                                    else {
+                                                        x.style.display = "none";
+                                                    }
+                                                };
+                                                function showRecptNoti(){
+                                                    var x = document.getElementById("recptlistnoti");
+                                                    if (x.style.display === "none"){
+                                                        x.style.display = "block";
+                                                    } 
+                                                    else {
+                                                        x.style.display = "none";
+                                                    }
+                                                };
+                                            </script>
+
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                        <button type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endif%}
+                </div>
+
+                <!-- End of notification div for user -->
+
+                <div class="col-md-1 col-md-offset-1"></div>
+
+                <!-- Start of view profile data div for user -->
+
+                <div class="col-sm-2 my-profile-div2">
+                    <div class="overlay" style="margin-bottom: 10px;">
+                        <img src="https://thumbs.dreamstime.com/b/user-icon-vector-line-outline-person-symbol-isolated-white-profile-silhouette-pictogram-avatar-login-my-account-132020777.jpg" class="img-fluid" alt="Responsive image"></img>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-primary btn-profile" data-bs-toggle="modal" data-bs-target="#myprofilediv">
+                            <a class="my-profile-link">View My Profile</a>
+                        </button>
+                    </div>
+                    <div class="modal fade" id="myprofilediv" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="myprofileLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                    <h5 class="modal-title myprofile-title" id="myprofileLabel">My Profile</h5>
+                                    <button id="popupclose" type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+
+
+                                {% if profiledata is none %}
+
+                                    <div class="modal-body">
+                                        <div class="d-flex justify-content-center">
+                                            <a class="acc-profile-logo" href="#" >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16" style="color: black;">
+                                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                        <div class="d-flex justify-content-center login-acc-name"><u>{{session.get("accId")}}</u></div>
+                                        <div class="d-flex justify-content-center">
+                                            <div class="table-responsive overflow-scroll">
+                                                <form action="/insertinfo" method="GET">
+                                                    <table class="table" style="border: 1px solid black; border-top: none; border-left: none; border-right: none;">
+                                                        <tr>
+                                                            <td colspan="2" style="font-family: Impact; font-size: 45px; font-weight: bold; text-align: center;">MY INFORMATION</td>
+                                                        </tr>
+                                                        <tr style="height: 5px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorname" style="font-size: 17px;">Email</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="email" name="name" value="{{session.get("accId")}}" placeholder="Enter email..." disabled="disabled" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 5px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorage" style="font-size: 17px;">Age</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="number" name="age" value="{{age}}" placeholder="Enter age..." max="65" min="17" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 5px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorgender" style="font-size: 17px;">Gender</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="text" name="gender" value="{{gender}}" placeholder="Enter gender..." pattern="(male|Male|MALE|m|M|female|Female|FEMALE|f|F)" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 5px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorphone" style="font-size: 17px;">Phone</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="tel" name="phone" value="{{phone}}" placeholder="Enter phone..." pattern="^(09)[0-9]{7-9}" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorbloodtype" style="font-size: 17px;">BloodType</label></td>
+                                                            <td>
+                                                                <select class="form-select selectbox" name="bloodtype" aria-label="Default select example" style="font-size: 15px; width: 200px; border: 2px solid black; border-radius: 30px; padding-left: 10px;">
+                                                                    <option value="" disabled>Choose your bloodtype</option>
+                                                                    <option value="A+">A+</option>
+                                                                    <option value="A-">A-</option>
+                                                                    <option value="B+">B+</option>
+                                                                    <option value="B-">B-</option>
+                                                                    <option value="O+">O+</option>
+                                                                    <option value="O-">O-</option>
+                                                                    <option value="AB+">AB+</option>
+                                                                    <option value="AB-">AB-</option>
+                                                                </select>
+                                                            </td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+
+                                                        <tr style="height: 5px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputuserrole" style="font-size: 17px;">Account Role</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="text" name="userrole" value="User" placeholder="Enter user role..." disabled="disabled" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 5px;"></tr>
+                                                        <tr style="text-align: center; height: 80px;">
+                                                            <td><button type="submit" class="btn full-right submit-button">Submit</button></td>
+                                                            <td><button type="reset" class="btn full-right cancel-button">Cancel</button></td>
+                                                        </tr>
+                                                    </table>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                {% else %}
+
+                                    <div class="modal-body">
+                                        <div class="d-flex justify-content-center">
+                                            <a class="acc-profile-logo" href="#" >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16" style="color: black;">
+                                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                        <div class="d-flex justify-content-center login-acc-name"><u>{{session.get("accId")}}</u></div>
+                                        <div class="d-flex justify-content-center">
+                                            <div class="table-responsive overflow-scroll">
+                                                <form id="profileform" action="/editprofile" method="POST">
+                                                    <table class="table" style="border: 1px solid black; border-top: none; border-left: none; border-right: none;">
+                                                        <tr>
+                                                            <td colspan="2" style="font-family: Impact; font-size: 45px; font-weight: bold; text-align: center;">MY INFORMATION</td>
+                                                        </tr>
+                                                        <tr style="height: 5px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorname" style="font-size: 17px;">Email</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="email" name="username" value="{{profiledata.aemail}}" placeholder="Enter email..." disabled="disabled" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 5px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorage" style="font-size: 17px;">Age</label></td>
+                                                            <td><input id="userage" class="form-control input-sm inputbox" type="number" name="modage" value="{{profiledata.uage}}" placeholder="Enter age..." max="65" min="17" disabled="disabled" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 5px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorgender" style="font-size: 17px;">Gender</label></td>
+                                                            <td><input id="usergender" class="form-control input-sm inputbox" type="text" name="modgender" value="{{profiledata.ugender}}" placeholder="Enter gender..." pattern="[FMfm]" disabled="disabled" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 5px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorphone" style="font-size: 17px;">Phone</label></td>
+                                                            <td><input id="userphone" class="form-control input-sm inputbox" type="tel" name="modphone" value="{{profiledata.uphone}}" placeholder="Enter phone..." pattern="^(09)[0-9]{7-9}" disabled="disabled" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 5px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorbloodtype" style="font-size: 17px;">BloodType</label></td>
+                                                            <td><input id="userbloodtype" class="form-control input-sm inputbox" type="text" name="modbloodtype" value="{{profiledata.ubtype}}" placeholder="Enter bloodtype..." pattern="(A|B|O|AB){1}[+-]{1}" disabled="disabled" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 5px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputuserrole" style="font-size: 17px;">Account Role</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="text" name="userrole" value="{{profiledata.urole}}" placeholder="Enter user role..." disabled="disabled" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 5px;"></tr>
+                                                        <tr style="text-align: center; height: 80px;">
+                                                            <td><button id="editbtn" type="button" class="btn full-right submit-button" onclick="EnableDisableTextBox(this)">Edit</button></td>
+                                                            <td><button id="savebtn" type="submit" class="btn full-right cancel-button" disabled>Save</button></td>
+                                                        </tr>
+
+                                                        <script>
+                                                            $('#editbtn').click(function(){
+                                                                $('#userage').prop('disabled', false);
+                                                                $('#userphone').prop('disabled', false);
+                                                                this.disabled = true;
+                                                                document.getElementById("savebtn").disabled = false;
+                                                            });
+
+                                                            $('#popupclose').click(function(){
+                                                                $('#userage').prop('disabled', true);
+                                                                $('#userphone').prop('disabled', true);
+                                                                document.getElementById('editbtn').innerText = 'Edit';
+                                                                document.getElementById("editbtn").disabled = false;
+                                                                document.getElementById("savebtn").disabled = true;
+                                                                document.getElementById("profileform").reset();
+                                                            });
+                                                        </script>
+
+                                                    </table>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                {% endif %}
+
+
+                                <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                    <button id="popupclosebtn" type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+
+                                    <script>
+                                        $('#popupclosebtn').click(function(){
+                                            $('#userage').prop('disabled', true);
+                                            $('#userphone').prop('disabled', true);
+                                            document.getElementById('editbtn').innerText = 'Edit';
+                                            document.getElementById("editbtn").disabled = false;
+                                            document.getElementById("savebtn").disabled = true;
+                                            document.getElementById("profileform").reset();
+                                        });
+                                    </script>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+
+                <!-- End of view profile data div for user -->
+
+                <div class="col-md-1 col-md-offset-1"></div>
+
+                <!-- Start of donation form div for user -->
+
+                <div class="col-sm-2 donate-blood-div3">
+                    <div class="overlay" style="margin-bottom: 10px;">
+                        <img src="https://thumbs.dreamstime.com/b/form-blood-donation-line-icon-signs-symbols-can-be-used-web-logo-mobile-app-ui-ux-white-background-204313341.jpg" class="img-fluid" alt="Responsive image"></img>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-primary btn-donate" data-bs-toggle="modal" data-bs-target="#donatediv">
+                            Donate Blood
+                        </button>
+                    </div>
+
+                    {% if profiledata is none %}
+
+                        <div class="modal fade" id="donatediv" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="donatedivLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                        <h5 class="modal-title donate-title" id="donatedivLabel">Blood Donation Form</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="d-flex justify-content-center">
+                                            <p style="color: rgb(156, 58, 58);">Please insert your information in "view my profile" first. Thank you!<p>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                        <button type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% else %}
+
+                        <div class="modal fade" id="donatediv" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="donatedivLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                        <h5 class="modal-title donate-title" id="donatedivLabel">Blood Donation Form</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="table-responsive overflow-scroll">
+                                                <form action="/donateblood" method="GET">
+                                                    <table class="table" style="border: 1px solid black; border-top: none; border-left: none; border-right: none;">
+                                                        <tr>
+                                                            <td colspan="2" style="font-family: Impact; font-size: 45px; font-weight: bold; text-align: center;">Donation Form Here</td>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorname" style="font-size: 17px;">Donor Name</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="email" name="donorname" value="{{session.get("accId")}}" placeholder="Enter email..." disabled="disabled" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorage" style="font-size: 17px;">Donor Age</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="number" name="donorage" placeholder="Enter age..." max="65" min="17" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorgender" style="font-size: 17px;">Donor Gender (F/M)</label></td>
+                                                            <td><input id="donategender" class="form-control input-sm inputbox" type="text" name="donorgender" value="{{profiledata.ugender}}" placeholder="Enter gender..." pattern="[FMfm]" disabled="disabled" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorphone" style="font-size: 17px;">Donor Phone</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="tel" name="donorphone" placeholder="Enter phone..." pattern="^(09)[0-9]{7-9}" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorbloodtype" style="font-size: 17px;">Donor BloodType</label></td>
+                                                            <td><input id="donatebloodtype" class="form-control input-sm inputbox" type="text" name="donorbloodtype" value="{{profiledata.ubtype}}" placeholder="Enter bloodtype..." pattern="(A|B|O|AB){1}[+-]{1}" disabled="disabled" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonatedate" style="font-size: 17px;">Blood Amount (ML)</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="number" name="donorbamt" placeholder="Enter blood amount..." min="350" max="450" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonatedate" style="font-size: 17px;">Donation Date</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="date" name="donordonatedate" placeholder="Choose date..." required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="text-align: center; height: 80px;">
+                                                            <td><button id="donatesubmit" type="submit" class="btn full-right submit-button">Submit</button></td>
+                                                            <td><button type="reset" class="btn full-right cancel-button">Cancel</button></td>
+                                                        </tr>
+                                                    </table>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                        <button type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+                <!-- End of donation form div for user -->
+
+                <div class="col-md-1 col-md-offset-1"></div>
+
+                <!-- Start of blood request form div for user -->
+
+                <div class="col-sm-2 request-blood-div4">
+                    <div class="overlay" style="margin-bottom: 10px;">
+                        <img src="https://thumbs.dreamstime.com/b/stock-illustration-177877825.jpg" class="img-fluid" alt="Responsive image"></img>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-primary btn-request" data-bs-toggle="modal" data-bs-target="#requestdiv">
+                            Request Blood
+                        </button>
+                    </div>
+
+                    {% if profiledata is none %}
+
+                        <div class="modal fade" id="requestdiv" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="donatedivLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                        <h5 class="modal-title donate-title" id="donatedivLabel">Blood Donation Form</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="d-flex justify-content-center">
+                                            <p style="color: rgb(156, 58, 58);">Please insert your information in "view my profile" first. Thank you!<p>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                        <button type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% else %}
+
+                        <div class="modal fade" id="requestdiv" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="requestdivLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                        <h5 class="modal-title donate-title" id="requestdivLabel">Blood Request Form</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="table-responsive overflow-scroll">
+                                                <form action="/requestblood" method="GET">
+                                                    <table class="table" style="border: 1px solid black; border-top: none; border-left: none; border-right: none;">
+                                                        <tr>
+                                                            <td colspan="2" style="font-family: Impact; font-size: 45px; font-weight: bold; text-align: center;">Request Form Here</td>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorname" style="font-size: 17px;">Recipient Name</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="email" name="recptname" value="{{session.get("accId")}}" placeholder="Enter email..." disabled="disabled" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorage" style="font-size: 17px;">Recipient Age</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="number" name="recptage" placeholder="Enter age..." min="1" max="120" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorgender" style="font-size: 17px;">Recipient Gender (F/M)</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="text" name="recptgender" value="{{profiledata.ugender}}" placeholder="Enter gender..." pattern="[FMfm]" disabled="disabled" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorphone" style="font-size: 17px;">Recipient Phone</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="tel" name="recptphone" placeholder="Enter phone..." pattern="^(09)[0-9]{7-9}" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorbloodtype" style="font-size: 17px;">Recipient BloodType</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="text" name="recptbloodtype" value="{{profiledata.ubtype}}" placeholder="Enter bloodtype..." pattern="(A|B|O|AB){1}[+-]{1}" disabled="disabled" required></td>
+                                                            <span class="validity"></span>
+                                                        </td>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonatedate" style="font-size: 17px;">Receive Date</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="date" name="recptreceivedate" placeholder="When you would like to have..." required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonatedate" style="font-size: 17px;">For? (normal/ urgent)</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="text" name="recptstatus" pattern="(normal|urgent)" placeholder="Why do you need..." required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="text-align: center; height: 80px;">
+                                                            <td><button type="submit" class="btn full-right submit-button">Submit</button></td>
+                                                            <td><button type="reset" class="btn full-right cancel-button">Cancel</button></td>
+                                                        </tr>
+                                                    </table>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                        <button type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+                <!-- End of blood request form div for user -->
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="d-flex justify-content-center">
+
+                <!-- Start of view history div for user -->
+
+                <div class="col-sm-2 blood-logo-div1">
+                    <div class="overlay" style="margin-bottom: 10px;">
+                        <img src="https://media.istockphoto.com/vectors/hand-holding-a-blood-donation-symbol-vector-id1213891608" class="img-fluid" alt="Responsive image"></img>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-primary btn-profile" data-bs-toggle="modal" data-bs-target="#viewdonorrecpt">
+                            <a class="my-profile-link">View Donors Recipients</a>
+                        </button>
+                    </div>
+
+                    {% if profiledata is none %}
+
+                        <div class="modal fade" id="viewdonorrecpt" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="viewdonorrecptLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                        <h5 class="modal-title donate-title" id="viewdonorrecptLabel">View Donors/Recipients Of Your Blood Type Here</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="d-flex justify-content-center">
+                                            <p style="color: rgb(156, 58, 58);">Recently we can't find the donors or recipients of the same blood type with you! We'll display as soon as we find them. THANK YOU!<p>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                        <button type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% else %}
+
+                        <div class="modal fade" id="viewdonorrecpt" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="viewdonorrecptLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                        <h5 class="modal-title donate-title" id="viewdonorrecptLabel">View Donors/Recipients Of Your Blood Type Here</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="table-responsive overflow-scroll">
+                                                <table class="table" style="border: 1px solid black; border-top: none; border-left: none; border-right: none;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Donor</th>
+                                                            <th scope="col">Recipient</th>
+                                                            <th scope="col">BloodType</th>
+                                                            <th scope="col">Email Addr</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for donorrecptlist in donorrecptlist %}
+                                                            <tr>
+                                                                <td>{{donorrecptlist.donarName.split("@gmail.com")[0]}}</td>
+                                                                <td>{{donorrecptlist.recptName.split("@gmail.com")[0]}}</td>
+                                                                <td>{{donorrecptlist.userBloodType}}</td>
+                                                                <td>{{donorrecptlist.accEmail}}</td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                        <button type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endif%}
+                </div>
+
+                <!-- End of view history div for user -->
+
+                <div class="col-md-1 col-md-offset-1"></div>
+
+                <!-- Start of view history div for user -->
+
+                <div class="col-sm-2 blood-logo-div1">
+                    <div class="d-flex justify-content-center">
+                        <p style="color: rgb(156, 58, 58); text-align: justify;">
+                            We found that donors desire to help a family member or a friend in need of blood was the most cited motivator 
+                            for blood donation in this study followed by a positive attitude of staff at the donor clinic, the desire to help other people, 
+                            and a reminder to donate when there is a shortage of blood.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Start of view history div for user -->
+
+                <div class="col-md-1 col-md-offset-1"></div>
+
+                <!-- Start of view history div for user -->
+
+                <div class="col-sm-2 blood-logo-div1">
+                    <div class="overlay" style="margin-bottom: 10px;">
+                        <img src="https://as1.ftcdn.net/jpg/01/98/02/86/500_F_198028675_9sPq9rkAg0P9MVltWLQgaWyBdXmJlLYl.jpg" class="img-fluid" alt="Responsive image"></img>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-primary btn-profile" data-bs-toggle="modal" data-bs-target="#myhistory">
+                            <a class="my-profile-link">View My History</a>
+                        </button>
+                    </div>
+
+                    {% if profiledata is none %}
+
+                        <div class="modal fade" id="myhistory" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="myhistoryLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                        <h5 class="modal-title donate-title" id="myhistoryLabel">My History</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="table-responsive overflow-scroll">
+                                                <p style="color: rgb(156, 58, 58);">Recently you dont have any data in your account! Please fill your information first. THANK YOU!<p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                        <button type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% else %}
+
+                        <div class="modal fade" id="myhistory" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="myhistoryLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                        <h5 class="modal-title donate-title" id="myhistoryLabel">My History</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="table-responsive overflow-scroll">
+                                                <table class="table" style="border: 1px solid black; border-top: none; border-left: none; border-right: none;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Donor</th>
+                                                            <th scope="col">Recipient</th>
+                                                            <th scope="col">Amount</th>
+                                                            <th scope="col">Date</th>
+                                                            <th scope="col">Status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for historydata in historydata %}
+                                                            <tr>
+                                                                <td>{{historydata.donarName}}</td>
+                                                                <td>{{historydata.recptName}}</td>
+                                                                <td>{{historydata.bloodAmt}} ml</td>
+                                                                <td>{{historydata.histDate}}</td>
+                                                                <td>{{historydata.histStatus}}</td> 
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                        <button type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endif %}
+                </div>
+
+                <!-- End of view history div for user -->
+
+            </div>
+        <div>
+    </div>
+    <!-- End of system body -->
+
+
+    <!-- Start of system footer -->
+    <footer class=" text-center text-white" style="background-color: rgb(156, 58, 58); width: 100%;" >
+        <div class="container p-4">
+            <section class="mb-4">
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-facebook-f"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-twitter"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-google"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-instagram"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-linkedin-in"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-github"></i></a>
+            </section>
+            <section class="">
+                <form action="">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-auto">
+                            <p class="pt-2" style="color: white;">
+                                <strong>Sign up for our newsletter</strong>
+                            </p>
+                        </div>
+                        <div class="col-md-5 col-12">
+                            <div class="form-outline form-white mb-4">
+                                <input type="email" id="form5Example21" class="form-control" />
+                                <label class="form-label" for="form5Example21">Email address</label>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-outline-light mb-4">Subscribe</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </footer>
+    <!-- End of system footer -->
+
+
+</body>
+</html>

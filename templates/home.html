@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    
+    <title>OBBMS - Home Page</title>
+    <link rel="stylesheet" href="../static/home.css">
+</head>
+<body>
+    <!-- Start of system nevigation -->
+    <nav class="navbar navbar-expand-sm" style="background-color: rgb(156, 58, 58);">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">OBBMS</a>
+            <button class="navbar-toggler navbar-btn" type="button" data-bs-toggle="collapse" data-bs-target="#navbardiv">
+                <span class="navbar-toggler-icon navbar-btnicon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbardiv">
+                <ul class="navbar-nav me-auto" style="margin-bottom: 10px;">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/aboutus">About-Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">User-Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/donatecamp">Donate-Camp</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">User-Login</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input  class="login-name-box" type="text" value="{{username}}" name="" placeholder="Please login..." disabled="disabled">
+                    <a class="acc-login-btn" href="#" >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                        </svg>
+                    </a>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <!-- End of system nevigation -->
+
+
+    <!-- Start of system body -->
+    <div style="width: 100%; background-color: rgb(201, 201, 201);">
+        <div class="row">
+            <div class="d-flex justify-content-center">
+                <div class="col-sm-2 home-div1">
+                    <img src="https://i.pinimg.com/originals/7a/57/57/7a57578ac5e50962303a92120a57f41a.jpg" class="img-fluid" alt="Responsive image"></img>
+                </div>
+                <div class="col-md-1 col-md-offset-1"></div>
+                <div class="col-sm-2 home-div2">
+                    <img src="https://marketplace.canva.com/EADajqtlaoY/1/0/1131w/canva-red-simple-heart-world-blood-donor-day-poster-pa9HKhuw-xU.jpg" class="img-fluid" alt="Responsive image"></img>
+                </div>
+                <div class="col-md-1 col-md-offset-1"></div>
+                <div class="col-sm-2 home-div3">
+                    <img src="https://i.pinimg.com/550x/5e/1b/8f/5e1b8f058a789e0f4cdb95ee6c233680.jpg" class="img-fluid" alt="Responsive image"></img>
+                </div>
+                <div class="col-md-1 col-md-offset-1"></div>
+                <div class="col-sm-2 home-div4">
+                    <img src="https://img.freepik.com/free-vector/blood-donation-isometric-poster-donor-experience_107791-5858.jpg" class="img-fluid" alt="Responsive image"></img>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="d-flex justify-content-center">
+                <div class="col-sm-3 paragraph-div1">
+                    <h4>Why Do We Donate Blood?</h4>
+                    <p>
+                        &nbsp; Safe blood saves lives. 
+                        Blood is needed by women with complications during pregnancy and childbirth, 
+                        children with severe anaemia, often resulting from malaria or malnutrition, 
+                        accident victims and surgical and cancer patients.
+                        Regular blood donation by a sufficient number of healthy people is needed to ensure that 
+                        blood will always be available whenever and wherever it is needed.
+                        Blood is the most precious gift that anyone can give to another person.
+                    </p>
+                </div>
+                <div class="col-md-1 col-md-offset-1"></div>
+                <div class="col-sm-3 paragraph-div2">
+                    <h4>How Much Blood Will Be Taken?</h4>
+                    <p>
+                        &nbsp; In most countries, the volume of blood taken is 450 millilitres, 
+                        less than 10 per cent of your total blood volume 
+                        (the average adult has 4.5 to 5 litres of blood). 
+                        In some countries, a smaller volume is taken. 
+                        Your body will replace the lost fluid within about 36 hours.
+                    </p>
+                </div>
+                <div class="col-md-1 col-md-offset-1"></div>
+                <div class="col-sm-3 paragraph-div3">
+                    <h4>Who Can Donate Blood?</h4>
+                    <p>
+                        &nbsp; The criteria for donor selection varies from country to country, 
+                        but blood can be donated by most people who are healthy and do not have an infection 
+                        that can be transmitted through their blood. The age at which people are eligible to 
+                        give blood varies, but is commonly between the ages of 17 and 65. Some countries accept 
+                        donations from people from the age of 16 and extend the upper age limit beyond 65 years.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End of system body -->
+
+
+    <!-- Start of system footer -->
+    <footer class=" text-center text-white" style="background-color: rgb(156, 58, 58);" >
+        <div class="container p-4">
+            <section class="mb-4">
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-facebook-f"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-twitter"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-google"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-instagram"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-linkedin-in"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-github"></i></a>
+            </section>
+            <section class="">
+                <form action="">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-auto">
+                            <p class="pt-2" style="color: white;">
+                                <strong>Sign up for our newsletter</strong>
+                            </p>
+                        </div>
+                        <div class="col-md-5 col-12">
+                            <div class="form-outline form-white mb-4">
+                                <input type="email" id="form5Example21" class="form-control" />
+                                <label class="form-label" for="form5Example21">Email address</label>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-outline-light mb-4">Subscribe</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </footer>
+    <!-- End of system nevigation -->
+
+
+</body>
+</html>

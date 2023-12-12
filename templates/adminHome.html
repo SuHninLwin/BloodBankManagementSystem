@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    
+    <title>OBBMS - Login Page</title>
+    <script src="../static/adminHome.js" defer></script>
+    <link rel="stylesheet" href="../static/adminHome.css">
+</head>
+<body>
+    <!-- Start of alert message on user login -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <script>
+            var messages = {{ messages | safe }};
+            for (var i=0; i<messages.length; i++) 
+            {
+                alert(messages[i]);
+            }
+        </script>
+    {% endif %}
+    {% endwith %}
+    <!-- End of alert message on user login -->
+
+
+    <!-- Start of system nevigation -->
+    <nav class="navbar navbar-expand-sm" style="background-color: rgb(156, 58, 58);">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">OBBMS</a>
+            <button class="navbar-toggler navbar-btn" type="button" data-bs-toggle="collapse" data-bs-target="#navbardiv">
+                <span class="navbar-toggler-icon navbar-btnicon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbardiv">
+                <ul class="navbar-nav me-auto" style="margin-bottom: 10px;">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#noninfo">Normal-User</a>
+                    </li>
+                    <div class="modal fade" id="noninfo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="noninfoLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                    <h5 class="modal-title heading-title" id="noninfoLabel">Normal Users Here</h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="table-responsive"  style="margin-top: 15px;">
+                                        <table class="table" style="border: 1px solid black; border-top: none; border-left: none; border-right: none;">
+                                            <p style="font-family: Impact; font-size: 25px; font-weight: bold; text-align: center; color: black;">UNSPECIFIED USERS<p>
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Email</th>
+                                                    <th scope="col">Password</th>
+                                                    <th scope="col">Role</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for noninfo in noninfo %}
+                                                    <tr>
+                                                        <td>{{noninfo.email}}</td>
+                                                        <td>{{noninfo.psw}} </td>
+                                                        <td>{{noninfo.role}}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                    <button type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#infouser">Specific-User</a>
+                    </li>
+                    <div class="modal fade" id="infouser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="infouserLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                    <h5 class="modal-title heading-title" id="infouserLabel">Specified Users Here</h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="table-responsive"  style="margin-top: 15px;">
+                                        <table class="table" style="border: 1px solid black; border-top: none; border-left: none; border-right: none;">
+                                            <p style="font-family: Impact; font-size: 25px; font-weight: bold; text-align: center; color: black;">USERS WITH DATA<p>
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Email</th>
+                                                    <th scope="col">Password</th>
+                                                    <th scope="col">Role</th>
+                                                    <th scope="col">Genter</th>
+                                                    <th scope="col">Age</th>
+                                                    <th scope="col">BloodType</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for infouser in infouser %}
+                                                    <tr>
+                                                        <td>{{infouser.email}}</td>
+                                                        <td>{{infouser.psw}} </td>
+                                                        <td>{{infouser.role}}</td>
+                                                        <td>{{infouser.genter}}</td>
+                                                        <td>{{infouser.age}}</td>
+                                                        <td>{{infouser.bt}}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                    <button type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#activeuser">Active-User</a>
+                    </li>
+                    <div class="modal fade" id="activeuser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="activeuserLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                    <h5 class="modal-title heading-title" id="activeuserLabel">Active Users Here</h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="table-responsive"  style="margin-top: 15px;">
+                                        <table class="table" style="border: 1px solid black; border-top: none; border-left: none; border-right: none;">
+                                            <p style="font-family: Impact; font-size: 25px; font-weight: bold; text-align: center; color: black;">ACTIVE USERS<p>
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Donor-Name</th>
+                                                    <th scope="col">Recipient-Name</th>
+                                                    <th scope="col">Blood Type</th>
+                                                    <th scope="col">History-Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for activeuser in activeuser %}
+                                                    <tr>
+                                                        <td>{{activeuser.donarName}}</td>
+                                                        <td>{{activeuser.rename}} </td>
+                                                        <td>{{activeuser.ubloodtype}}</td>
+                                                        <td>{{activeuser.hisdate}}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                    <button type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#userwithoutactivity">NonActive-User</a>
+                    </li>
+                    <div class="modal fade" id="userwithoutactivity" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="userwithoutactivityLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                    <h5 class="modal-title heading-title" id="userwithoutactivityLabel">Non-Active Users Here</h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="table-responsive"  style="margin-top: 15px;">
+                                        <table class="table" style="border: 1px solid black; border-top: none; border-left: none; border-right: none;">
+                                            <p style="font-family: Impact; font-size: 25px; font-weight: bold; text-align: center; color: black;">NON-ACTIVE USERS<p>
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Email</th>
+                                                    <th scope="col">Gender</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for userwithoutactivity in userwithoutactivity %}
+                                                    <tr>
+                                                        <td>{{userwithoutactivity.email}}</td>
+                                                        <td>{{userwithoutactivity.ugenter}} </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                    <button type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#mostlydonatebloodtype">Offered-Blood</a>
+                    </li>
+                    <div class="modal fade" id="mostlydonatebloodtype" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mostlydonatebloodtypeLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                    <h5 class="modal-title heading-title" id="mostlydonatebloodtypeLabel">Mostly Offered BloodType Here</h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="table-responsive"  style="margin-top: 15px;">
+                                        <table class="table" style="border: 1px solid black; border-top: none; border-left: none; border-right: none;">
+                                            <p style="font-family: Impact; font-size: 25px; font-weight: bold; text-align: center; color: black;">MOSTLY OFFERED BLOOD<p>
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Blood-Group</th>
+                                                    <th scope="col">Request-Donate (Count)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for mostlydonatebloodtype in mostlydonatebloodtype %}
+                                                    <tr>
+                                                        <td>{{mostlydonatebloodtype.bloodgroup}}</td>
+                                                        <td>{{mostlydonatebloodtype.count}}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                    <button type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home">Logout-Now</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input  class="login-name-box" type="text" value="{{session.get("accId")}}" name="profileusername" placeholder="Please login..." disabled="disabled">
+                    <a class="acc-login-btn" href="#" >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                        </svg>
+                    </a>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <!-- End of system nevigation -->
+
+
+    <!-- Start of system body -->
+    <div style="width: 100%; background-color: rgb(201, 201, 201);">
+        <div class="d-flex justify-content-center">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="d-flex justify-content-center user-interface-title">
+                        Online Blood Bank Management System
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="d-flex justify-content-center">
+
+                <!-- Start of account div access -->
+
+                <div class="col-sm-2 blood-logo-div1">
+                    <div class="overlay" style="margin-bottom: 5px;">
+                        <img src="https://thumbs.dreamstime.com/b/user-icon-vector-line-outline-person-symbol-isolated-white-profile-silhouette-pictogram-avatar-login-my-account-132020777.jpg" class="img-fluid" alt="Responsive image"></img>
+                    </div>
+                    <div style="font-size: 20px; text-align: center; color: rgb(156, 58, 58); margin-bottom: 5px;"><b><u>ACCOUNT</u></b></div>
+                    <div class="d-flex justify-content-center">
+
+                        <!-- Start of account insert-edit access -->
+
+                        <button type="button" class="btn btn-primary btn-profile" data-bs-toggle="modal" data-bs-target="#accounteditinsert">
+                            <a class="my-profile-link">Insert-Edit</a>
+                        </button>
+                        <div class="modal fade" id="accounteditinsert" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="accounteditinsertLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                        <h5 class="modal-title heading-title" id="accounteditinsertLabel">Account Summary</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="table-responsive overflow-scroll">
+                                                <form action="" method="">
+                                                    <div style="overflow-x: scroll; overflow-y: scroll; height: 300px;">
+                                                        <table class="cd-table" style="border: thin solid black;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>User ID</th>
+                                                                    <th>Email</th>
+                                                                    <th>Password</th>
+                                                                    <th>Role</th>
+                                                                </tr>
+                                                            </thead>
+                                                            {% for acc in acc %}
+                                                                <div>
+                                                                    <tr>
+                                                                        <form action="/editaccount" method="POST">
+                                                                            <td><input class="form-control input-sm inputbox" type="number" value="{{acc.accId}}" name="tocacid" disabled></td>
+                                                                            <input class="form-control input-sm inputbox" type="hidden" value="{{acc.accId}}" name="tocacid" required>
+                                                                            <td><input class="form-control input-sm inputbox" type="email" value="{{acc.accEmail}}" name="tocacemail" required></td>
+                                                                            <td><input class="form-control input-sm inputbox" type="text" value="{{acc.accPassword}}" name="tocacpass" required></td>
+                                                                            <td><input class="form-control input-sm inputbox" type="text" value="{{acc.accRole}}" name="tocacrole" pattern="(user|admin)" required></td>
+                                                                            <td><button type="submit" class="btn btn-primary btn-donate">Edit</button></td>
+                                                                        </form>
+                                                                    </tr>
+                                                                </div>
+                                                            {% endfor %}
+                                                            <hr>
+                                                        </table>
+                                                    </div>
+                                                </form>
+                                                <form action="/admininsertaccount" method="POST">
+                                                    <table class="table" style="border: 1px solid black; border-top: none; border-left: none; border-right: none;">
+                                                        <tr>
+                                                            <td colspan="2" style="font-family: Impact; font-size: 45px; font-weight: bold; text-align: center;">Insert new Data</td>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorage" style="font-size: 17px;">Email</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="email" name="acemail" placeholder="Enter Email..." required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorage" style="font-size: 17px;">Password</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="text" name="acpassword" placeholder="Enter Password..." pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorage" style="font-size: 17px;">Role</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="text" name="acrole" value="admin" disabled="disabled"></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="text-align: center; height: 80px;">
+                                                            <td><button type="submit" class="btn full-right btn-donate">Submit</button></td>
+                                                        </tr>
+                                                    </table>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                        <button type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- End of account insert-edit access -->
+
+                        <!-- Start of account view-delete access -->
+
+                        <button type="button" class="btn btn-primary btn-profile" data-bs-toggle="modal" data-bs-target="#accountviewdel">
+                            <a class="my-profile-link">View-Delete</a>
+                        </button>
+                        <div class="modal fade" id="accountviewdel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="accountviewdelLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                        <h5 class="modal-title heading-title" id="accountviewdelLabel">Account Summary</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="table-responsive overflow-scroll">
+                                                <form action="" method="">
+                                                    <input type="text" class="cd-search table-filter inputbox" data-table="account-table" placeholder="Item to filter.." />
+                                                    <div style="overflow-x: scroll; overflow-y: scroll; height: 600px;">
+                                                        <table class="cd-table account-table table" style="border: thin solid black;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Email</th>
+                                                                    <th>Password</th>
+                                                                    <th>Role</th>
+                                                                </tr>
+                                                            </thead>
+                                                            {% for acc in acc %}
+                                                                <div>
+                                                                    <tr>
+                                                                        <td>{{acc.accId}}</td>
+                                                                        <td>{{acc.accEmail}}</td>
+                                                                        <td>{{acc.accPassword}}</td>
+                                                                        <td>{{acc.accRole}}</td>
+                                                                    </tr>
+                                                                </div>
+                                                            {% endfor %}
+                                                            <hr>
+                                                        </table>
+                                                    </div>
+                                                </form>
+                                                <form action="/adminacdel" method="POST">
+                                                    <table>
+                                                        <tr>
+                                                        <td><label for="inputdonorage" style="font-size: 17px;">Enter the ID </label></td>
+                                                        <td><input class="form-control input-sm inputbox" type="number" name="delidname" placeholder="Enter ID to delete..." required></td>
+                                                        <td><button type="submit" class="btn btn-primary btn-donate">Delete</button></td>
+                                                        </tr> 
+                                                    </table>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                        <button type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- End of account view-delete access -->
+                    </div>
+                </div>
+
+                <!-- End of account div access -->
+
+                <div class="col-md-1 col-md-offset-1"></div>
+
+                <!-- Start of blood div access -->
+
+                <div class="col-sm-2 blood-logo-div1">
+                    <div class="overlay" style="margin-bottom: 5px;">
+                        <img src="https://thumbs.dreamstime.com/b/blood-drop-logo-donation-save-life-vector-illustration-212517173.jpg" class="img-fluid" alt="Responsive image"></img>
+                    </div>
+                    <div style="font-size: 20px; text-align: center; color: rgb(156, 58, 58); margin-bottom: 5px;"><b><u>BLOOD</u></b></div>
+                    <div class="d-flex justify-content-center">
+
+                        <!-- Start of blood insert-edit access -->
+
+                        <button type="button" class="btn btn-primary btn-profile" data-bs-toggle="modal" data-bs-target="#bloodeditinsert">
+                            <a class="my-profile-link">Edit-Data</a>
+                        </button>
+
+                        <div class="modal fade" id="bloodeditinsert" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="bloodeditinsertLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                        <h5 class="modal-title heading-title" id="bloodeditinsertLabel">Blood  Summary</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="table-responsive overflow-scroll">
+                                                <table class="cd-table" style="border: thin solid black;">
+                                                    <thead>
+                                                        <tr>
+                                                        <th>Blood ID</th>
+                                                        <th>Group</th>
+                                                        <th>Description</th>
+                                                        <th>Amount</th>
+                                                        </tr>
+                                                    </thead>
+                                                    {% for bld in bld %}
+                                                        <div>
+                                                            <tr>
+                                                                <form action="/editblood" method="POST">
+                                                                    <td><input class="form-control input-sm inputbox" type="number" value="{{bld.bloodId}}" name="tobloodid" disabled></td>
+                                                                    <input class="form-control input-sm inputbox" type="hidden" value="{{bld.bloodId}}" name="tobloodid" required>
+                                                                    <td><input class="form-control input-sm inputbox" type="text" value="{{bld.bloodGroup}}" name="bloodgrp" pattern="(A|B|O|AB){1}[+-]{1}" disabled></td>
+                                                                    <input class="form-control input-sm inputbox" type="hidden" value="{{bld.bloodGroup}}" name="bloodgrp" pattern="(A|B|O|AB){1}[+-]{1}" required>
+                                                                    <td><input class="form-control input-sm inputbox" type="text" value="{{bld.bloodDesc}}" name="bloodde" required></td>
+                                                                    <td><input class="form-control input-sm inputbox" type="number" value="{{bld.bloodAmt}}" name="blooda" required></td>
+                                                                    <td><button type="submit" class="btn btn-primary btn-donate">Edit</button></td>
+                                                                </form>
+                                                            </tr>
+                                                        </div>
+                                                    {% endfor %}
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                        <button type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- End of blood insert-edit access -->
+
+                        <!-- Start of blood view-delete access -->
+
+                        <button type="button" class="btn btn-primary btn-profile" data-bs-toggle="modal" data-bs-target="#bloodviewdel">
+                            <a class="my-profile-link">View-Data</a>
+                        </button>
+
+                        <div class="modal fade" id="bloodviewdel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="bloodviewdelLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                        <h5 class="modal-title heading-title" id="bloodviewdelLabel">Blood Summary</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="table-responsive overflow-scroll">
+                                                <form action="" method="">
+                                                    <input type="text" class="cd-search table-filter inputbox" data-table="blood-table" placeholder="Item to filter.." />
+                                                    <table class="cd-table blood-table table" style="border: thin solid black;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>ID</th>
+                                                                <th>Group</th>
+                                                                <th>Description</th>
+                                                                <th>Amount</th>
+                                                            </tr>
+                                                        </thead>
+                                                        {% for bld in bld %}
+                                                            <div>
+                                                                <tr>
+                                                                    <td>{{bld.bloodId}}</td>
+                                                                    <td>{{bld.bloodGroup}}</td>
+                                                                    <td>{{bld.bloodDesc}}</td>
+                                                                    <td>{{bld.bloodAmt}}</td>
+                                                                </tr>
+                                                            </div>
+                                                        {% endfor %}
+                                                        <hr>
+                                                    </table>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                        <button type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- End of blood insert-edit access -->
+                    </div>
+                </div>
+
+                <!-- End of blood div access -->
+
+                <div class="col-md-1 col-md-offset-1"></div>
+
+                <!-- Start of doctor div access -->
+
+                <div class="col-sm-2 blood-logo-div1">
+                    <div class="overlay" style="margin-bottom: 5px;">
+                        <img src="https://thumbs.dreamstime.com/b/doctor-icon-logo-white-background-template-vector-97395631.jpg" class="img-fluid" alt="Responsive image"></img>
+                    </div>
+                    <div style="font-size: 20px; text-align: center; color: rgb(156, 58, 58); margin-bottom: 5px;"><b><u>DOCTOR</u></b></div>
+                    <div class="d-flex justify-content-center">
+
+                        <!-- Start of doctor insert-edit access -->
+
+                        <button type="button" class="btn btn-primary btn-profile" data-bs-toggle="modal" data-bs-target="#doctoreditinsert">
+                            <a class="my-profile-link">Insert-Edit</a>
+                        </button>
+
+                        <div class="modal fade" id="doctoreditinsert" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="doctoreditinsertLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                        <h5 class="modal-title heading-title" id="doctoreditinsertLabel">Doctor  Summary</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="table-responsive overflow-scroll">
+                                                <div style="overflow-x: scroll; overflow-y: scroll; height: 300px;">
+                                                    <table class="cd-table" style="border: thin solid black;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Doctor ID</th>
+                                                                <th>Name</th>
+                                                                <th>Email</th>
+                                                                <th>Phone</th>
+                                                                <th>Hospital</th>
+                                                                <th>Available Time</th>
+                                                                <th>Description</th>
+                                                            </tr>
+                                                        </thead>
+                                                        {% for doc in doc %}
+                                                            <div>
+                                                                <tr>
+                                                                    <form action="/editdoctor" method="POST">
+                                                                        <td><input class="form-control input-sm inputbox" type="number" value="{{doc.doctId}}" name="toedoctorid" disabled></td>
+                                                                        <input class="form-control input-sm inputbox" type="hidden" value="{{doc.doctId}}" name="toedoctorid" required>
+                                                                        <td><input class="form-control input-sm inputbox" type="text" value="{{doc.doctName}}" name="docn" required></td>
+                                                                        <td><input class="form-control input-sm inputbox" type="email" value="{{doc.doctEmail}}" name="doce" required></td>
+                                                                        <td><input class="form-control input-sm inputbox" type="text" value="{{doc.doctPhone}}" name="docp" pattern="^(09)[0-9]{7-9}" required></td>
+                                                                        <td><input class="form-control input-sm inputbox" type="text" value="{{doc.doctHospital}}" name="doch" required></td>
+                                                                        <td><input class="form-control input-sm inputbox" type="text" value="{{doc.doctTime}}" name="doct" required></td>
+                                                                        <td><input class="form-control input-sm inputbox" type="text" value="{{doc.doctDesc}}" name="docd" required></td>
+                                                                        <td><button type="submit" class="btn btn-primary btn-donate">Edit</button></td>
+                                                                    </form>
+                                                                </tr>
+                                                            </div>
+                                                        {% endfor %}
+                                                    </table>
+                                                </div>
+                                                <form action="/admininsertdoc" method="POST">
+                                                    <table class="table" style="border: 1px solid black; border-top: none; border-left: none; border-right: none;">
+                                                        <tr>
+                                                            <td colspan="2" style="font-family: Impact; font-size: 45px; font-weight: bold; text-align: center;">Insert new Data</td>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorage" style="font-size: 17px;">Doctor Name</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="text" name="docname" placeholder="Enter Doctor Name..." required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorage" style="font-size: 17px;">Email</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="email" name="docemail" placeholder="Enter Email..." required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorage" style="font-size: 17px;">Phone</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="text" name="docph" placeholder="Enter Phone Number..." pattern="^(09)[0-9]{7-9}" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorage" style="font-size: 17px;">Hospital</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="text" name="dochos" placeholder="Enter Hospital Name..." required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorage" style="font-size: 17px;">Available Time</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="text" name="doctime" placeholder="Enter Avaiable Time..." required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorage" style="font-size: 17px;">Description</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="text" name="docdesc" placeholder="Enter Description..." required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="text-align: center; height: 80px;">
+                                                            <td><button type="submit" class="btn full-right btn-donate">Submit</button></td>
+                                                        </tr>
+                                                    </table>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                        <button type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- End of doctor insert-edit access -->
+
+                        <!-- Start of doctor view-delete access -->
+
+                        <button type="button" class="btn btn-primary btn-profile" data-bs-toggle="modal" data-bs-target="#doctorviewdel">
+                            <a class="my-profile-link">View-Delete</a>
+                        </button>
+
+                        <div class="modal fade" id="doctorviewdel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="doctorviewdelLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                        <h5 class="modal-title heading-title" id="doctorviewdelLabel">Doctor  Summary</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="table-responsive overflow-scroll">
+                                                <form action="" method="">
+                                                    <input type="text" class="cd-search table-filter inputbox" data-table="doctor-table" placeholder="Item to filter.." />
+                                                    <div style="overflow-x: scroll; overflow-y: scroll; height: 600px;">
+                                                        <table class="cd-table doctor-table table" style="border: thin solid black;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Doctor ID</th>
+                                                                    <th>Name</th>
+                                                                    <th>Email</th>
+                                                                    <th>Phone</th>
+                                                                    <th>Hospital</th>
+                                                                    <th>Available Time</th>
+                                                                    <th>Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            {% for doc in doc %}
+                                                                <div>
+                                                                    <tr>
+                                                                        <td>{{doc.doctId}}</td>
+                                                                        <td>{{doc.doctName}}</td>
+                                                                        <td>{{doc.doctEmail}}</td>
+                                                                        <td>{{doc.doctPhone}}</td>
+                                                                        <td>{{doc.doctHospital}}</td>
+                                                                        <td>{{doc.doctTime}}</td>
+                                                                        <td>{{doc.doctDesc}}</td>
+                                                                    </tr>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </table>
+                                                    </div>
+                                                </form>
+                                                <form action="/admindocdel" method="POST">
+                                                    <table>
+                                                        <tr>
+                                                            <td><label for="inputdonorage" style="font-size: 17px;">Enter the ID </label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="number" name="deldocidname" placeholder="Enter ID to delete..." required></td>
+                                                            <td><button type="submit" class="btn btn-primary btn-donate">Delete</button></td>
+                                                        </tr> 
+                                                    </table>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                        <button type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- End of doctor view-delete access -->
+
+                    </div>
+                </div>
+
+                <!-- End of doctor div access -->
+
+            </div>
+        </div>
+
+        <div class="container-fluid" style="margin-top: 15px;">
+            <div class="d-flex justify-content-center">
+
+                <!-- Start of history div access -->
+
+                <div class="col-sm-2 blood-logo-div1" style="margin-bottom: 15px;">
+                    <div class="overlay" style="margin-bottom: 5px;">
+                        <img src="https://thumbs.dreamstime.com/b/history-linear-icon-modern-outline-history-logo-concept-whit-history-linear-icon-modern-outline-history-logo-concept-white-133526528.jpg" class="img-fluid" alt="Responsive image"></img>
+                    </div>
+                    <div style="font-size: 20px; text-align: center; color: rgb(156, 58, 58); margin-bottom: 5px;"><b><u>HISTORY</u></b></div>
+                    <div class="d-flex justify-content-center">
+
+                        <!-- Start of history view access -->
+
+                        <button type="button" class="btn btn-primary btn-profile" data-bs-toggle="modal" data-bs-target="#historyviewdelete">
+                            <a class="my-profile-link">View-Delete</a>
+                        </button>
+
+                        <div class="modal fade" id="historyviewdelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="historyviewdeleteLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                        <h5 class="modal-title heading-title" id="historyviewdeleteLabel">History  Summary</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="table-responsive overflow-scroll">
+                                                <form action="" method="">
+                                                    <input type="text" class="cd-search table-filter inputbox" data-table="hist-table" placeholder="Item to filter.." />
+                                                    <div style="overflow-x: scroll; overflow-y: scroll; height: 600px;">
+                                                        <table class="cd-table hist-table table" style="border: thin solid black;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Recipient Name</th>
+                                                                    <th>Donor Name</th>
+                                                                    <th>Blood ID</th>
+                                                                    <th>Blood Amount</th>
+                                                                    <th>History Date</th>
+                                                                    <th>Doctor ID</th>
+                                                                </tr>
+                                                            </thead>
+                                                            {% for his in his %}
+                                                                <div>
+                                                                    <tr>
+                                                                        <td>{{his.hisId}}</td>
+                                                                        <td>{{his.recptName}}</td>
+                                                                        <td>{{his.donarName}}</td>
+                                                                        <td>{{his.bloodId}}</td>
+                                                                        <td>{{his.bloodAmt}}</td>
+                                                                        <td>{{his.histDate}}</td>
+                                                                        <td>{{his.docId}}</td>
+                                                                    </tr>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </table>
+                                                    </div>
+                                                </form>
+                                                <form action="/adminhisdel" method="POST">
+                                                    <table>
+                                                        <tr>
+                                                            <td><label for="inputdonorage" style="font-size: 17px;">Enter the ID </label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="number" name="delhisidname" placeholder="Enter ID to delete..." required></td>
+                                                            <td><button type="submit" class="btn btn-primary btn-donate">Delete</button></td>
+                                                        </tr> 
+                                                    </table>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                        <button type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- End of history view access -->
+
+                    </div>
+                </div>
+
+                <!-- End of history div access -->
+
+                <div class="col-md-1 col-md-offset-1"></div>
+
+                <!-- Start of Notification div access -->
+
+                <div class="col-sm-2 blood-logo-div1" style="margin-bottom: 15px;">
+                    <div class="overlay" style="margin-bottom: 5px;">
+                        <img src="https://thumbs.dreamstime.com/b/red-notification-icon-speech-bubble-red-notification-icon-speech-bubble-concept-ui-mailbox-check-list-writing-104050698.jpg" class="img-fluid" alt="Responsive image"></img>
+                    </div>
+                    <div style="font-size: 20px; text-align: center; color: rgb(156, 58, 58); margin-bottom: 5px;"><b><u>NOTIFICATION</u></b></div>
+                    <div class="d-flex justify-content-center">
+
+                        <!-- Start of Notification view access -->
+
+                        <button type="button" class="btn btn-primary btn-profile" data-bs-toggle="modal" data-bs-target="#notiviewdelete">
+                            <a class="my-profile-link">View-Delete</a>
+                        </button>
+
+                        <div class="modal fade" id="notiviewdelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="notiviewdeleteLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                        <h5 class="modal-title heading-title" id="notiviewdeleteLabel">Notification  Summary</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="table-responsive overflow-scroll">
+                                                <form action="" method="">
+                                                    <input type="text" class="cd-search table-filter inputbox" data-table="noti-table" placeholder="Item to filter.." />
+                                                    <div style="overflow-x: scroll; overflow-y: scroll; height: 600px;">
+                                                        <table class="cd-table noti-table table" style="border: thin solid black;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Type</th>
+                                                                    <th>Status</th>
+                                                                    <th>Commant</th>
+                                                                    <th>User Id</th>
+                                                                </tr>
+                                                            </thead>
+                                                            {% for noti in noti %}
+                                                                <div>
+                                                                    <tr>
+                                                                        <td>{{noti.notiId}}</td>
+                                                                        <td>{{noti.notiType}}</td>
+                                                                        <td>{{noti.notiStatus}}</td>
+                                                                        <td>{{noti.notiCmt}}</td>
+                                                                        <td>{{noti.userId}}</td>
+                                                                    </tr>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </table>
+                                                    </div>
+                                                </form>
+                                                <form action="/adminnotidel" method="POST">
+                                                    <table>
+                                                        <tr>
+                                                            <td><label for="inputdonorage" style="font-size: 17px;">Enter the ID </label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="number" name="delnotiidname" placeholder="Enter ID to delete..." required></td>
+                                                            <td><button type="submit" class="btn btn-primary btn-donate">Delete</button></td>
+                                                        </tr> 
+                                                    </table>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                        <button type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- End of Notification view access -->
+                    </div>
+                </div>
+
+                <!-- End of Notification div access -->
+
+                <div class="col-md-1 col-md-offset-1"></div>
+
+                <!-- Start of Users div access -->
+
+                <div class="col-sm-2 blood-logo-div1" style="margin-bottom: 15px;">
+                    <div class="overlay" style="margin-bottom: 5px;">
+                        <img src="https://thumbs.dreamstime.com/b/people-vector-icon-group-symbol-illustration-businessman-logo-multiple-users-silhouette-153484048.jpg" class="img-fluid" alt="Responsive image"></img>
+                    </div>
+                    <div style="font-size: 20px; text-align: center; color: rgb(156, 58, 58); margin-bottom: 5px;"><b><u>USERS</u></b></div>
+                    <div class="d-flex justify-content-center">
+
+                        <!-- Start of user insert-edit access -->
+
+                        <button type="button" class="btn btn-primary btn-profile" data-bs-toggle="modal" data-bs-target="#usersinsertedit">
+                            <a class="my-profile-link">Insert-Edit</a>
+                        </button>
+
+                        <div class="modal fade" id="usersinsertedit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="usersinserteditLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                        <h5 class="modal-title heading-title" id="usersinserteditLabel">Users  Summary</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="table-responsive overflow-scroll">
+                                                <div style="overflow-x: scroll; overflow-y: scroll; height: 300px;">
+                                                    <table class="cd-table" style="border: thin solid black;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>ID</th>
+                                                                <th>Age</th>
+                                                                <th>Gender</th>
+                                                                <th>Phone</th>
+                                                                <th>Blood Type</th>
+                                                            </tr>
+                                                        </thead>
+                                                        {% for usr in usr %}
+                                                            <div>
+                                                                <tr>
+                                                                    <form action="/editadminuser" method="POST">
+                                                                        <td><input class="form-control input-sm inputbox" type="number" value="{{usr.userId}}" name="tousrid"   disabled></td>
+                                                                        <input class="form-control input-sm inputbox" type="hidden" value="{{usr.userId}}" name="tousrid"   required>
+                                                                        <td><input class="form-control input-sm inputbox" type="number" value="{{usr.userAge}}" name="usera" min="17" max="65" required></td>
+                                                                        <td><input class="form-control input-sm inputbox" type="text" value="{{usr.userGender}}" name="userg" pattern="(male|Male|MALE|m|M|female|Female|FEMALE|f|F)" required></td>
+                                                                        <td><input class="form-control input-sm inputbox" type="text" value="{{usr.userPhone}}" name="userp" pattern="^(09)[0-9]{7-9}" required></td>
+                                                                        <td><input class="form-control input-sm inputbox" type="text" value="{{usr.userBloodtype}}" name="userb" pattern="(A|B|O|AB){1}[+-]{1}" required></td>
+                                                                        <td><button type="submit" class="btn btn-primary btn-donate">Edit</button></td>
+                                                                    </form>
+                                                                </tr>
+                                                            </div>
+                                                        {% endfor %}
+                                                    </table>
+                                                </div>
+                                                <form action="/admininsertuser" method="POST">
+                                                    <table class="table" style="border: 1px solid black; border-top: none; border-left: none; border-right: none;">
+                                                        <tr>
+                                                            <td colspan="2" style="font-family: Impact; font-size: 45px; font-weight: bold; text-align: center;">Insert new Data</td>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorage" style="font-size: 17px;">User Age</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="number" name="age" placeholder="Enter Age..." max="65" min="17" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorage" style="font-size: 17px;">Gender</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="text" name="gen" placeholder="Enter Gender..." pattern="(male|Male|MALE|m|M|female|Female|FEMALE|f|F)" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorage" style="font-size: 17px;">Phone</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="text" name="ph" placeholder="Enter Phone No..." pattern="^(09)[0-9]{7-9}" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="border: transparent; height: 60px;">
+                                                            <td><label for="inputdonorage" style="font-size: 17px;">Blood Type</label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="text" name="utype" placeholder="Enter Blood Type..." pattern="(A|B|O|AB){1}[+-]{1}" required></td>
+                                                            <span class="validity"></span>
+                                                        </tr>
+                                                        <tr style="height: 10px;"></tr>
+                                                        <tr style="text-align: center; height: 80px;">
+                                                            <td><button type="submit" class="btn full-right btn-donate">Insert</button></td>
+                                                        </tr>
+                                                    </table>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                        <button type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- End of Users insert-edit access -->
+
+                        <!-- Start of Users view-delete access -->
+
+                        <button type="button" class="btn btn-primary btn-profile" data-bs-toggle="modal" data-bs-target="#usersviewdelete">
+                            <a class="my-profile-link">View-Delete</a>
+                        </button>
+
+                        <div class="modal fade" id="usersviewdelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="usersviewdeleteLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color: rgb(156, 58, 58);">
+                                        <h5 class="modal-title heading-title" id="usersviewdeleteLabel">User  Summary</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="table-responsive overflow-scroll">
+                                                <form action="" method="">
+                                                    <input type="text" class="cd-search table-filter inputbox" data-table="user-table" placeholder="Item to filter.." />
+                                                    <div style="overflow-x: scroll; overflow-y: scroll; height: 600px;">
+                                                        <table class="cd-table user-table table" style="border: thin solid black;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Age</th>
+                                                                    <th>Gender</th>
+                                                                    <th>Phone</th>
+                                                                    <th>Blood Type</th>
+                                                                </tr>
+                                                            </thead>
+                                                            {% for usr in usr %}
+                                                                <div>
+                                                                    <tr>
+                                                                        <td>{{usr.userId}}</td>
+                                                                        <td>{{usr.userAge}}</td>
+                                                                        <td>{{usr.userGender}}</td>
+                                                                        <td>{{usr.userPhone}}</td>
+                                                                        <td>{{usr.userBloodtype}}</td>
+                                                                    </tr>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </table>
+                                                    </div>
+                                                </form>
+                                                <form action="/adminusrdel" method="POST">
+                                                    <table>
+                                                        <tr>
+                                                            <td><label for="inputdonorage" style="font-size: 17px;">Enter the ID </label></td>
+                                                            <td><input class="form-control input-sm inputbox" type="number" name="delusridname" placeholder="Enter ID to delete..." required></td>
+                                                            <td><button type="submit" class="btn btn-primary btn-donate">Delete</button></td>
+                                                        </tr> 
+                                                    </table>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="background-color: rgb(156, 58, 58);">
+                                        <button type="button" class="btn btn-primary btn-close-div" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- End of Users view-delete access -->
+                    </div>
+                </div>
+
+                <!-- End of Users div access -->
+
+            </div>
+        </div>
+    </div>
+    <!-- End of system body -->
+
+
+    <!-- Start of system footer -->
+    <footer class=" text-center text-white" style="background-color: rgb(156, 58, 58);" >
+        <div class="container p-4">
+            <section class="mb-4">
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-facebook-f"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-twitter"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-google"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-instagram"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-linkedin-in"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-github"></i></a>
+            </section>
+            <section class="">
+                <form action="">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-auto">
+                            <p class="pt-2" style="color: white;">
+                                <strong>Sign up for our newsletter</strong>
+                            </p>
+                        </div>
+                        <div class="col-md-5 col-12">
+                            <div class="form-outline form-white mb-4">
+                                <input type="email" id="form5Example21" class="form-control" />
+                                <label class="form-label" for="form5Example21">Email address</label>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-outline-light mb-4">Subscribe</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </footer>
+    <!-- End of system nevigation -->
+</body>
+</html>
